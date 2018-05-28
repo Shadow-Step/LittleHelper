@@ -16,6 +16,7 @@ namespace LittleHelper.model
             Controller.AutoClick(Village.TAB_CASTLE);
             Controller.AutoClick(Castle.Options.get_coords);
             Controller.AutoClick(Castle.Options.REPAIR);
+            Thread.Sleep(2000);
         }
         
     }

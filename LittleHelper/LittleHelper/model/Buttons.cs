@@ -14,6 +14,7 @@ namespace LittleHelper.model
         //Space between buttons
         int space = 18;
 
+        //MAIN BUTTONS
         public static Coords MAP_BUTTON         = new Coords(345, 35);
         public static Coords VILLAGE_BUTTON     = new Coords(363, 35);
         public static Coords PARISH_BUTTON      = new Coords(381, 35);
@@ -23,8 +24,17 @@ namespace LittleHelper.model
         public static Coords ATTACK_BUTTON      = new Coords(453, 35);
         public static Coords REPORTS_BUTTON     = new Coords(471, 35);
         public static Coords FRACTION_BUTTON    = new Coords(489, 35);
+        public static Coords NEXTVILLAGE_BUTTON = new Coords(345, 23);
+        //VILLAGE BUTTONS
+        public static Coords VILLAGE_VILLAGE;
+        public static Coords VILLAGE_CASTLE;
+        public static Coords VILLAGE_RESOURCES;
+        public static Coords VILLAGE_TRADE;
+        public static Coords VILLAGE_ARMY;
+        public static Coords VILLAGE_SCOUT;
+        public static Coords VILLAGE_BANQUET;
+        public static Coords VILLAGE_LORDS;
 
-        public static Coords NEXTVILLAGE_BUTTON = new Coords(345,23);
 
         public static void InitCoords()
         {

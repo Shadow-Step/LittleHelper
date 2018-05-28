@@ -10,15 +10,15 @@ namespace LittleHelper.butcords
     class MainScreen
     {
         //MAIN BAR
-        public static Coords MAP_BUTTON         = new Coords(345, 35);
-        public static Coords VILLAGE_BUTTON     = new Coords(363, 35);
-        public static Coords PARISH_BUTTON      = new Coords(381, 35);
-        public static Coords RESEARCH_BUTTON    = new Coords(399, 35);
-        public static Coords RANK_BUTTON        = new Coords(417, 35);
-        public static Coords QUEST_BUTTON       = new Coords(435, 35);
-        public static Coords ATTACK_BUTTON      = new Coords(453, 35);
-        public static Coords REPORTS_BUTTON     = new Coords(471, 35);
-        public static Coords FRACTION_BUTTON    = new Coords(489, 35);
+        public static Coords TAB_MAP         = new Coords(345, 35);
+        public static Coords TAB_VILLAGE     = new Coords(363, 35);
+        public static Coords TAB_PARISH      = new Coords(381, 35);
+        public static Coords TAB_RESEARCH    = new Coords(399, 35);
+        public static Coords TAB_RANK        = new Coords(417, 35);
+        public static Coords TAB_QUEST       = new Coords(435, 35);
+        public static Coords TAB_ATTACK      = new Coords(453, 35);
+        public static Coords TAB_REPORTS     = new Coords(471, 35);
+        public static Coords TAB_FRACTION    = new Coords(489, 35);
 
         //OTHER
         public static Coords NEXTVILLAGE_BUTTON = new Coords(345, 23);

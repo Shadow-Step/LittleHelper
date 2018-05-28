@@ -25,7 +25,6 @@ namespace LittleHelper.model
         }
         static public void MoveTo(Coords coords)
         {
-            Thread.Sleep(2000);
             Reset();
             mouse_event(MOUSE_MOVE, coords.X, coords.Y, 0, IntPtr.Zero);
         }
@@ -45,9 +44,10 @@ namespace LittleHelper.model
         }
         static public void AutoClick(Coords coords)
         {
-            Reset();
             MoveTo(coords);
+            Thread.Sleep(200);
             Click();
+            Thread.Sleep(1000);
         }
     }
 }

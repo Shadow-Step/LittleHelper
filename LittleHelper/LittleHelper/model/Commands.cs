@@ -4,23 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using LittleHelper.butcords;
+
 namespace LittleHelper.model
 {
     class Commands
     {
         public static void RepairCastle()
         {
-            
+            Controller.AutoClick(MainScreen.TAB_VILLAGE);
+            Controller.AutoClick(Village.TAB_CASTLE);
+            Controller.AutoClick(Castle.Options.get_coords);
+            Controller.AutoClick(Castle.Options.REPAIR);
         }
-        public static void SwitchVillage()
-        {
-            Controller.Reset();
-            Controller.MoveTo(Buttons.NEXTVILLAGE_BUTTON);
-            Controller.Click();
-        }
-        public static void OpenVillage()
-        {
-            Controller.AutoClick(Buttons.VILLAGE_BUTTON);
-        }
+        
     }
 }

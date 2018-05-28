@@ -27,8 +27,7 @@ namespace LittleHelper
         public MainWindow()
         {
             InitializeComponent();
-            Controller.Reset();
-            Controller.MoveTo(427,53);
+            Commands.RepairCastle();
         }
     }
 }

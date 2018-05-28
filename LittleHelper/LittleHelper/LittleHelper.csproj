@@ -72,11 +72,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="model\Buttons.cs" />
     <Compile Include="model\Commands.cs" />
     <Compile Include="model\Controller.cs" />
     <Compile Include="model\Coords.cs" />
-    <Compile Include="model\Screen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

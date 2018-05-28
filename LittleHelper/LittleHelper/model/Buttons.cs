@@ -9,15 +9,26 @@ namespace LittleHelper.model
 {
     class Buttons
     {
-        public static Coords MAP_BUTTON;
-        public static Coords VILLAGE_BUTTON;
-        public static Coords PARISH_BUTTON;
-        public static Coords RESEARCH_BUTTON;
-        public static Coords RANK_BUTTON;
-        public static Coords QUEST_BUTTON;
-        public static Coords ATTACK_BUTTON;
-        public static Coords REPORTS_BUTTON;
-        public static Coords FRACTION_BUTTON;
+        //Start of main buttons bar
+        int start_point = 345;
+        //Space between buttons
+        int space = 18;
 
+        public static Coords MAP_BUTTON         = new Coords(345, 35);
+        public static Coords VILLAGE_BUTTON     = new Coords(363, 35);
+        public static Coords PARISH_BUTTON      = new Coords(381, 35);
+        public static Coords RESEARCH_BUTTON    = new Coords(399, 35);
+        public static Coords RANK_BUTTON        = new Coords(417, 35);
+        public static Coords QUEST_BUTTON       = new Coords(435, 35);
+        public static Coords ATTACK_BUTTON      = new Coords(453, 35);
+        public static Coords REPORTS_BUTTON     = new Coords(471, 35);
+        public static Coords FRACTION_BUTTON    = new Coords(489, 35);
+
+        public static Coords NEXTVILLAGE_BUTTON = new Coords(345,23);
+
+        public static void InitCoords()
+        {
+           
+        }
     }
 }

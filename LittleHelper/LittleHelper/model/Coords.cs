@@ -8,9 +8,14 @@ namespace LittleHelper.model
 {
     class Coords
     {
-        int X { get; set; }
-        int Y { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
         
+        public Coords()
+        {
+            X = 0;
+            Y = 0;
+        }
         public Coords(int x, int y)
         {
             X = x;

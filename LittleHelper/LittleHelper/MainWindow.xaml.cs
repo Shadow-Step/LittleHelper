@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using LittleHelper.model;
+using System.Threading;
 namespace LittleHelper
 {
     /// <summary>
@@ -23,6 +24,8 @@ namespace LittleHelper
         public MainWindow()
         {
             InitializeComponent();
+            Thread.Sleep(4000);
+            Commands.OpenVillage();
         }
     }
 }

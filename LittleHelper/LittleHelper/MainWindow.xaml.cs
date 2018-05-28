@@ -28,7 +28,7 @@ namespace LittleHelper
         {
             InitializeComponent();
             Controller.Reset();
-            Controller.MoveTo(450, 110);
+            Controller.MoveTo(427,53);
         }
     }
 }

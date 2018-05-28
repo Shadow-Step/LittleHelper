@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="butcords\Castle.cs" />
     <Compile Include="butcords\MainScreen.cs" />
+    <Compile Include="butcords\Research.cs" />
     <Compile Include="butcords\Village.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

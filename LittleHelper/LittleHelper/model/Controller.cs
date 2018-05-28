@@ -25,6 +25,8 @@ namespace LittleHelper.model
         }
         static public void MoveTo(Coords coords)
         {
+            Thread.Sleep(2000);
+            Reset();
             mouse_event(MOUSE_MOVE, coords.X, coords.Y, 0, IntPtr.Zero);
         }
         static public void MoveTo(int x, int y)

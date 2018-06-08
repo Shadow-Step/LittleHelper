@@ -69,10 +69,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="butcords\Army.cs" />
     <Compile Include="butcords\Castle.cs" />
     <Compile Include="butcords\ImagesPos.cs" />
     <Compile Include="butcords\MainScreen.cs" />
-    <Compile Include="butcords\RFields.cs" />
     <Compile Include="butcords\Research.cs" />
     <Compile Include="butcords\Village.cs" />
     <Compile Include="MainWindow.xaml.cs">

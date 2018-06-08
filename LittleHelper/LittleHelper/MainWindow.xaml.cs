@@ -19,19 +19,13 @@ using LittleHelper.model;
 
 namespace LittleHelper
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
+    
     public partial class MainWindow : Window
     {
-        Player player;
         public MainWindow()
         {
             InitializeComponent();
             
-            Thread.Sleep(3000);
-            player = Commands.InitPlayer();
-
         }
     }
 }

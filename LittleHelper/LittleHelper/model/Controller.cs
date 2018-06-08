@@ -45,7 +45,7 @@ namespace LittleHelper.model
         static public void AutoClick(Coords coords)
         {
             MoveTo(coords);
-            Thread.Sleep(200);
+            Thread.Sleep(250);
             Click();
             Thread.Sleep(1000);
         }

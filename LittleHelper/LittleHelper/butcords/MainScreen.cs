@@ -24,5 +24,7 @@ namespace LittleHelper.butcords
         public static Coords NEXTVILLAGE_BUTTON = new Coords(345, 23);
         public static Coords FREECARD_BUTTON    = new Coords(15, 85);
         public static Coords CLOSECARD_BUTTON   = new Coords(427, 53);
+
+        //
     }
 }

@@ -24,10 +24,14 @@ namespace LittleHelper
     /// </summary>
     public partial class MainWindow : Window
     {
+        Player player;
         public MainWindow()
         {
             InitializeComponent();
-            Commands.RepairCastle();
+            
+            Thread.Sleep(3000);
+            player = Commands.InitPlayer();
+
         }
     }
 }

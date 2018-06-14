@@ -19,7 +19,7 @@ namespace LittleHelper.src
         protected DateTime      last_execute;
         protected DateTime      execute_alarm;
         protected bool          executed = false;
-        protected double execute_rate;
+        protected double        execute_rate;
         
         public abstract void Execute();
         public void Completed()

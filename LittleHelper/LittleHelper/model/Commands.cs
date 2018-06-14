@@ -47,6 +47,11 @@ namespace LittleHelper.model
                 Controller.AutoClick(MainScreen.TAB_RANK);
                 Thread.Sleep(rand.Next(1000,2000));
             } },
+            {4,()=>
+            {
+                Controller.AutoClick(MainScreen.MAIL_BUTTON);
+                Thread.Sleep(rand.Next(5000,7000));
+            } },
         };
 
         public static void RepairCastle(int iterations, CastleOptions options)
@@ -87,11 +92,11 @@ namespace LittleHelper.model
             Controller.AutoClick(MainScreen.TAB_VILLAGE);
             Controller.AutoClick(Village.TAB_VILLAGE);
             Controller.AutoClick(Village.Info.get_coords);
-            Thread.Sleep(500);
+            Thread.Sleep(rand.Next(400, 700));
             for (int i = 0; i < value; i++)
             {
                 Controller.AutoClick(Village.Info.TAX_PLUS);
-                Thread.Sleep(200);
+                Thread.Sleep(rand.Next(100, 200));
             }
         }
         public static void DecreaseTaxes(int value)
@@ -99,11 +104,11 @@ namespace LittleHelper.model
             Controller.AutoClick(MainScreen.TAB_VILLAGE);
             Controller.AutoClick(Village.TAB_VILLAGE);
             Controller.AutoClick(Village.Info.get_coords);
-            Thread.Sleep(500);
+            Thread.Sleep(rand.Next(400, 700));
             for (int i = 0; i < value; i++)
             {
                 Controller.AutoClick(Village.Info.TAX_MINUS);
-                Thread.Sleep(200);
+                Thread.Sleep(rand.Next(100,200));
             }
         }
         public static void SendScout()
@@ -111,17 +116,6 @@ namespace LittleHelper.model
             Controller.AutoClick(MainScreen.Map.SCOUT_BUTTON);
             Thread.Sleep(1000);
             Controller.AutoClick(MainScreen.Map.SEND_SCOUT);
-        }
-        public static void ArmyBuy(Coords unit,int value)
-        {
-            Controller.AutoClick(MainScreen.TAB_VILLAGE);
-            Controller.AutoClick(Village.TAB_ARMY);
-            Thread.Sleep(1000);
-            for (int i = 0; i < value; i++)
-            {
-                Controller.AutoClick(unit);
-                Thread.Sleep(50);
-            }
         }
         public static void ArmyBuy(Coords[] unit, int[] value,int times)
         {
@@ -147,26 +141,6 @@ namespace LittleHelper.model
             Controller.AutoClick(MainScreen.TAB_RESEARCH);
             Controller.AutoClick(tab);
             Controller.AutoClick(skill);
-        }
-        public static void SendTraders(Coords tab, Coords res, int[] targets)
-        {
-            ResetVillageNumber();
-            Controller.AutoClick(MainScreen.TAB_VILLAGE);
-            Controller.AutoClick(Village.TAB_TRADE);
-            Controller.AutoClick(tab);
-            foreach (var x in targets)
-            {
-                Controller.AutoClick(Trading.RES_1);
-                Controller.AutoClick(Trading.RES_2);
-                Controller.AutoClick(res);
-                Controller.AutoClick(Trading.BUTTON_TARGETMENU);
-                Controller.AutoClick(Trading.TargetMenu.targets[x]);
-                Controller.AutoClick(Trading.BUTTON_SELL);
-                Thread.Sleep(1000);
-                Controller.AutoClick(MainScreen.NEXTVILLAGE_BUTTON);
-                Thread.Sleep(2000);
-            }
-           
         }
         public static void SendTraders(Coords tab, int[] resources, int[] targets)
         {

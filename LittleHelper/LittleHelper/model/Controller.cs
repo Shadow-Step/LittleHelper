@@ -10,6 +10,7 @@ namespace LittleHelper.model
 {
     class Controller
     {
+        
         //Mouse event constants
         private static UInt32 MOUSE_MOVE = 0x0001;
         private static UInt32 MOUSE_BUTTONDOWN = 0x0002;
@@ -18,6 +19,12 @@ namespace LittleHelper.model
         [DllImport("user32.dll")]
         private static extern void mouse_event(UInt32 dwFlags, int dx, int dy, UInt32 dwData, IntPtr dwExtraInfo);
 
+        public static int ToMilliseconds(int hours = 0, int minutes = 0, int seconds = 0)
+        {
+            minutes += hours * 60;
+            seconds += minutes * 60;
+            return seconds * 1000;
+        }
         //Controller commands
         static public void Reset()
         {
@@ -44,10 +51,11 @@ namespace LittleHelper.model
         }
         static public void AutoClick(Coords coords)
         {
+            Random rand = new Random();
             MoveTo(coords);
-            Thread.Sleep(250);
+            Thread.Sleep(rand.Next(200,500));
             Click();
-            Thread.Sleep(1000);
+            Thread.Sleep(rand.Next(1000,2000));
         }
     }
 }

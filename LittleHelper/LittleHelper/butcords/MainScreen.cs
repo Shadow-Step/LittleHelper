@@ -24,11 +24,18 @@ namespace LittleHelper.butcords
         public static Coords NEXTVILLAGE_BUTTON = new Coords(345, 23);
         public static Coords FREECARD_BUTTON    = new Coords(15, 85);
         public static Coords CLOSECARD_BUTTON   = new Coords(427, 53);
+        public static Coords PLAYERINFO_BUTTON  = new Coords(465, 243);
         //
         public static class Map
         {
             public static Coords SCOUT_BUTTON   = new Coords(467, 73);
             public static Coords SEND_SCOUT     = new Coords(305, 210);
+        }
+        public static class PlayerInfo
+        {
+            public static Coords VILLAGE_1 = new Coords(305,117);
+            public static Coords VILLAGE_2 = new Coords(305, 130);
+            public static Coords VILLAGE_3 = new Coords(305, 143);
         }
     }
 }

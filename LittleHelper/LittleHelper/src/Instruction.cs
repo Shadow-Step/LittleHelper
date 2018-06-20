@@ -11,11 +11,11 @@ namespace LittleHelper.src
         public delegate void Action();
         Action action;
 
-        public Instruction(ExecuteMode execute_mode,double execute_rate,Action action)
+        public Instruction(ExecuteMode execute_mode,double execute_rate_sec, Action action)
         {
             this.action = action;
             this.execute_mode = execute_mode;
-            this.execute_rate = execute_rate;
+            this.execute_rate_sec = execute_rate_sec;
         }
         public override void Execute()
         {
@@ -31,11 +31,11 @@ namespace LittleHelper.src
         Action action;
         T1 p1;
 
-        public Instruction(ExecuteMode execute_mode, double execute_rate, Action action,T1 p1)
+        public Instruction(ExecuteMode execute_mode, double execute_rate_sec, Action action,T1 p1)
         {
             this.action = action;
             this.execute_mode = execute_mode;
-            this.execute_rate = execute_rate;
+            this.execute_rate_sec = execute_rate_sec;
             this.p1 = p1;
         }
         public override void Execute()
@@ -53,11 +53,11 @@ namespace LittleHelper.src
         T1 p1;
         T2 p2;
 
-        public Instruction(ExecuteMode execute_mode, double execute_rate, Action action, T1 p1,T2 p2)
+        public Instruction(ExecuteMode execute_mode, double execute_rate_sec, Action action, T1 p1,T2 p2)
         {
             this.action = action;
             this.execute_mode = execute_mode;
-            this.execute_rate = execute_rate;
+            this.execute_rate_sec = execute_rate_sec;
             this.p1 = p1;
             this.p2 = p2;
         }
@@ -77,11 +77,11 @@ namespace LittleHelper.src
         T2 p2;
         T3 p3;
 
-        public Instruction(ExecuteMode execute_mode, double execute_rate, Action action, T1 p1, T2 p2, T3 p3)
+        public Instruction(ExecuteMode execute_mode, double execute_rate_sec, Action action, T1 p1, T2 p2, T3 p3)
         {
             this.action = action;
             this.execute_mode = execute_mode;
-            this.execute_rate = execute_rate;
+            this.execute_rate_sec = execute_rate_sec;
             this.p1 = p1;
             this.p2 = p2;
             this.p3 = p3;

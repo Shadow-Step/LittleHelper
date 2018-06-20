@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using LittleHelper.butcords;
-
+using ImgRdr;
+using System.Drawing;
 
 namespace LittleHelper.model
 {
@@ -16,6 +17,7 @@ namespace LittleHelper.model
         RepairAndRestoreCastle,
         RepairAll
     }
+   
     class Commands
     {
         static Random rand = new Random();
@@ -26,7 +28,7 @@ namespace LittleHelper.model
             {0,()=>
             {
                 Controller.AutoClick(MainScreen.TAB_REPORTS);
-                Thread.Sleep(rand.Next(1500,3000));
+                Thread.Sleep(rand.Next(3000,5000));
             } },
             {1,()=>
             {
@@ -51,6 +53,16 @@ namespace LittleHelper.model
             {
                 Controller.AutoClick(MainScreen.MAIL_BUTTON);
                 Thread.Sleep(rand.Next(5000,7000));
+            } },
+            {5,()=>
+            {
+                Controller.AutoClick(MainScreen.TAB_MAP);
+                Thread.Sleep(rand.Next(10000,15000));
+            } },
+            {6,()=>
+            {
+                Controller.AutoClick(MainScreen.TAB_RESEARCH);
+                Thread.Sleep(rand.Next(10000,15000));
             } },
         };
 
@@ -111,12 +123,7 @@ namespace LittleHelper.model
                 Thread.Sleep(rand.Next(100,200));
             }
         }
-        public static void SendScout()
-        {
-            Controller.AutoClick(MainScreen.Map.SCOUT_BUTTON);
-            Thread.Sleep(1000);
-            Controller.AutoClick(MainScreen.Map.SEND_SCOUT);
-        }
+        
         public static void ArmyBuy(Coords[] unit, int[] value,int times)
         {
             Controller.AutoClick(MainScreen.TAB_VILLAGE);
@@ -161,7 +168,6 @@ namespace LittleHelper.model
                 Controller.AutoClick(MainScreen.NEXTVILLAGE_BUTTON);
                 Thread.Sleep(rand.Next(1800,2300));
             }
-
         }
         public static void ResetVillageNumber()
         {
@@ -171,23 +177,132 @@ namespace LittleHelper.model
             Thread.Sleep(rand.Next(4000,6000));
             Controller.AutoClick(MainScreen.PlayerInfo.VILLAGE_1);
         }
-        public static Player InitPlayer()
+        public static void ZoomOutMap(int times)
+        {
+            Controller.WheelRotate(-1, times);
+            Thread.Sleep(500 * times);
+        }
+        public static void ActDectFilter(Coords filter)
         {
             Controller.AutoClick(MainScreen.TAB_VILLAGE);
-            Thread.Sleep(500);
             Controller.AutoClick(MainScreen.TAB_MAP);
+            Controller.MoveTo(MainScreen.FILTER_BUTTON);
+            Thread.Sleep(100);
+            Controller.MoveTo(1360 / 2, 768 / 2);
             Thread.Sleep(1000);
-            int gold = Reader.GetData(ImagesPos.GOLD);
-            int honor = Reader.GetData(ImagesPos.HONOR);
-            int fair = Reader.GetData(ImagesPos.FAIR);
-            int villages = Reader.GetData(ImagesPos.VILLAGES);
-            return new Player(villages, gold, honor, fair);
+            Controller.AutoClick(MainScreen.FILTER_BUTTON);
+            Controller.AutoClick(filter);
+            Thread.Sleep(1000);
         }
+
+
         public static void DoSomething()
         {
             Random rand = new Random();
             sleep_commands[rand.Next(0, sleep_commands.Count)]();
         }
-        
+
+        public static class Scouting
+        {
+            
+            public static Coords SCOUT_MINUS = new Coords(302,578);
+            public static Coords SCOUT_PLUS = new Coords(405, 578);
+
+            
+            public static void SendScout(int value)
+            {
+                Controller.AutoClick(MainScreen.Map.SCOUT_BUTTON);
+                Thread.Sleep(1000);
+                Controller.MoveTo(SCOUT_MINUS);
+                for (int i = 0; i < 8; i++)
+                {
+                    Controller.Click();
+                    Thread.Sleep(200);
+                }
+                Controller.MoveTo(SCOUT_PLUS);
+                for (int i = 1; i < value; i++)
+                {
+                    Controller.Click();
+                    Thread.Sleep(200);
+                }
+                Controller.AutoClick(MainScreen.Map.SEND_SCOUT);
+            }
+            public static void CollectStacks()
+            {
+                ResetVillageNumber();
+                ZoomOutMap(1);
+                ActDectFilter(MainScreen.Filters.SCOUT_FILTER);
+                ImageReader reader = new ImageReader();
+                List<Pair> stacks = reader.FindImageOnScreen(MainScreen.READER_AREA, "stack.bmp", 14);
+                Thread.Sleep(2000);
+
+                if (stacks.Count != 0)
+                {
+                    int scouts_onstack = 8 / stacks.Count;
+
+                    foreach (var stc in stacks)
+                    {
+                        Controller.MoveTo(stc.X, stc.Y);
+                        Thread.Sleep(100);
+                        Controller.Click();
+                        Controller.Click();
+                        Thread.Sleep(1000);
+                        SendScout(scouts_onstack);
+                        ResetVillageNumber();
+                        ZoomOutMap(1);
+                    }
+                }
+                ActDectFilter(MainScreen.Filters.ERASE_FILTER);
+
+            }
+        }
+        public static class Attacking
+        {
+            public static void LoadFormation(Coords formation)
+            {
+                Controller.AutoClick(AttackScreen.SETTINGS_BUTTON);
+                Thread.Sleep(1000);
+                Controller.AutoClick(formation);
+                Controller.AutoClick(AttackScreen.LocalSettings.LOADFORMATION_BUTTON);
+                Thread.Sleep(1000);
+                Controller.AutoClick(AttackScreen.LocalSettings.X_BUTTON);
+
+            }
+            public static void Attack()
+            {
+                ResetVillageNumber();
+                ActDectFilter(MainScreen.Filters.AI_FILTER);
+                ImageReader reader = new ImageReader();
+                List<Pair> castles = reader.FindImageOnScreen(MainScreen.READER_AREA, "castle_2.bmp", 20);
+                Thread.Sleep(2000);
+
+                foreach(var item in castles)
+                {
+                    Controller.AutoClick(item);
+                    Thread.Sleep(1000);
+
+                    List<Pair> shields = reader.FindImageOnScreen(MainScreen.READER_AREA, "shield_rat.bmp", 5);
+                    List<Pair> type = reader.FindImageOnScreen(MainScreen.READER_AREA, "castle_2_selected.bmp", 20);
+
+                    if (shields.Count == 0 || type.Count == 0)
+                    {
+                        ResetVillageNumber();
+                    }
+                    else
+                    {
+                        Controller.AutoClick(AttackScreen.MAP_ATTACK_BUTTON);
+                        Thread.Sleep(2000);
+                        LoadFormation(AttackScreen.LocalSettings.FORM_3);
+                        Controller.AutoClick(AttackScreen.SENDATTACK_BUTTON);
+                        Thread.Sleep(500);
+                        Controller.AutoClick(AttackScreen.SendingScreen.ATTACK_BUTTON);
+                        Controller.AutoClick(AttackScreen.SendingScreen.SEND_BUTTON);
+                        Thread.Sleep(2000);
+                        break;
+                    }
+                }
+                ActDectFilter(MainScreen.Filters.ERASE_FILTER);
+            }
+        }
     }
 }

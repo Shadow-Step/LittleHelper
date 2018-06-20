@@ -9,16 +9,16 @@ namespace LittleHelper.butcords
 {
     class Research
     {
-        public static Coords BUY_POINT = new Coords(455, 92);
+        public static Coords BUY_POINT = new Coords(1230, 248);
 
-        public static Coords TAB_INDUSTRY = new Coords(40, 130);
-        public static Coords TAB_WARFARE = new Coords(100, 130);
-        public static Coords TAB_AGRONOMY = new Coords(160, 130);
-        public static Coords TAB_EDUCATION = new Coords(225, 128);
+        public static Coords TAB_INDUSTRY = new Coords(100, 342);
+        public static Coords TAB_WARFARE = new Coords(267, 342);
+        public static Coords TAB_AGRONOMY = new Coords(435, 342);
+        public static Coords TAB_EDUCATION = new Coords(600, 342);
 
-        public static Coords SKILL_1 = new Coords(45, 160);
-        public static Coords SKILL_2 = new Coords(45, 190);
-        public static Coords SKILL_3 = new Coords(45, 220);
-        public static Coords SKILL_4 = new Coords(45, 250);
+        public static Coords SKILL_1 = new Coords(115, 430);
+        public static Coords SKILL_2 = new Coords(115, 510);
+        public static Coords SKILL_3 = new Coords(115, 590);
+        public static Coords SKILL_4 = new Coords(115, 670);
     }
 }

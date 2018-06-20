@@ -34,11 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ImgReader">
-      <HintPath>..\..\..\..\C# Projects\ImageReader\ImgReader\bin\Debug\ImgReader.dll</HintPath>
-    </Reference>
-    <Reference Include="Nnet">
-      <HintPath>..\..\..\..\C# Projects\ImageReader\Nnet\bin\Debug\Nnet.dll</HintPath>
+    <Reference Include="ImageReader">
+      <HintPath>..\ImageReader\bin\Debug\ImageReader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -61,6 +58,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="butcords\AttackScreen.cs" />
+    <Compile Include="model\Cvrt.cs" />
+    <Compile Include="src\AutoAttack.cs" />
+    <Compile Include="src\AutoResearch.cs" />
+    <Compile Include="src\AutoScout.cs" />
+    <Compile Include="src\AutoTrading.cs" />
     <Compile Include="src\BaseInstruction.cs" />
     <Compile Include="src\Instruction.cs" />
     <Page Include="MainWindow.xaml">
@@ -89,7 +92,6 @@
     <Compile Include="model\Coords.cs" />
     <Compile Include="model\Player.cs" />
     <Compile Include="model\ReadData.cs" />
-    <Compile Include="model\Reader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

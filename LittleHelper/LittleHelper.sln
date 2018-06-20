@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LittleHelper", "LittleHelper\LittleHelper.csproj", "{608ED901-39D6-4790-9D97-EF1BC6FD8F79}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageReader", "ImageReader\ImageReader.csproj", "{D621FD65-0824-454E-B421-8859D2AC68A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "contlib", "contlib\contlib.csproj", "{8CAB0128-56A1-4D40-8B5D-0ED76FA3CA0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{608ED901-39D6-4790-9D97-EF1BC6FD8F79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{608ED901-39D6-4790-9D97-EF1BC6FD8F79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{608ED901-39D6-4790-9D97-EF1BC6FD8F79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D621FD65-0824-454E-B421-8859D2AC68A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D621FD65-0824-454E-B421-8859D2AC68A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D621FD65-0824-454E-B421-8859D2AC68A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D621FD65-0824-454E-B421-8859D2AC68A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CAB0128-56A1-4D40-8B5D-0ED76FA3CA0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CAB0128-56A1-4D40-8B5D-0ED76FA3CA0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CAB0128-56A1-4D40-8B5D-0ED76FA3CA0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CAB0128-56A1-4D40-8B5D-0ED76FA3CA0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

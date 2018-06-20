@@ -19,10 +19,10 @@ namespace LittleHelper.src
         protected DateTime      last_execute;
         protected DateTime      execute_alarm;
         protected bool          executed = false;
-        protected double        execute_rate;
+        protected double        execute_rate_sec;
         
         public abstract void Execute();
-        public void Completed()
+        public virtual void Completed()
         {
             last_execute = DateTime.Now;
             executed = true;
@@ -30,7 +30,7 @@ namespace LittleHelper.src
                 execute_mode = ExecuteMode.Once;
             Commands.DoSomething();
         }
-        public bool IsReady()
+        public virtual bool IsReady()
         {
             Random rand = new Random();
             switch (execute_mode)
@@ -39,7 +39,7 @@ namespace LittleHelper.src
                     return !executed;
                 case ExecuteMode.EveryTime:
                     TimeSpan time = DateTime.Now.Subtract(last_execute);
-                    return time.TotalSeconds >= execute_rate + (rand.Next((int)execute_rate, (int)execute_rate + (int)execute_rate / 10));
+                    return time.TotalSeconds >= execute_rate_sec;
                 case ExecuteMode.Alarm:
                     return DateTime.Now >= execute_alarm;
                 default:

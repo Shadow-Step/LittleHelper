@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using ImgRdr;
-namespace LittleHelper.model
+
+namespace LittleHalper.stat
 {
     class Controller
     {
@@ -71,5 +72,6 @@ namespace LittleHelper.model
             }
             Thread.Sleep(500);
         }
+        
     }
 }

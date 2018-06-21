@@ -59,7 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="butcords\AttackScreen.cs" />
-    <Compile Include="model\Cvrt.cs" />
+    <Compile Include="stat\Cvrt.cs" />
     <Compile Include="src\AutoAttack.cs" />
     <Compile Include="src\AutoResearch.cs" />
     <Compile Include="src\AutoScout.cs" />
@@ -87,11 +87,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="model\Commands.cs" />
-    <Compile Include="model\Controller.cs" />
-    <Compile Include="model\Coords.cs" />
-    <Compile Include="model\Player.cs" />
-    <Compile Include="model\ReadData.cs" />
+    <Compile Include="stat\Commands.cs" />
+    <Compile Include="stat\Controller.cs" />
+    <Compile Include="stat\Coords.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

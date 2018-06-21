@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LittleHelper.model;
+using LittleHalper.stat;
+using System.Drawing;
 
 namespace LittleHelper.butcords
 {
@@ -20,5 +21,7 @@ namespace LittleHelper.butcords
         public static Coords SKILL_2 = new Coords(115, 510);
         public static Coords SKILL_3 = new Coords(115, 590);
         public static Coords SKILL_4 = new Coords(115, 670);
+
+        public static Rectangle READER_AREA = new Rectangle(1056, 99, 48, 5);
     }
 }

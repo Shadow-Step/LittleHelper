@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LittleHelper.model;
+using LittleHalper.stat;
 using LittleHelper.butcords;
 using System.Threading;
 using ImgRdr;
@@ -12,13 +12,25 @@ namespace LittleHelper.src
 {
     class AutoTrading : BaseInstruction
     {
+        string[,] res_dict = new string[4, 8]
+        {
+            {"Wood","Stone","Iron","Pitch","","","","" },
+            {"Apples","Cheese","Meat","Bread","Vegetables","Fish","Ale","" },
+            {"Bows","Pickes","Armor","Swords","Catapults","","","" },
+            {"Venison","Furniture","Metalware","Clothes","Wine","Salt","Spice","Silk" },
+        };
+        Dictionary<Coords, string[]> log_dict = new Dictionary<Coords, string[]>()
+        {
+            {Trading.TAB_RESOURCES_4,new string[4]{ "Wood", "Stone", "Iron", "Pitch" } },
+            {Trading.TAB_FOOD_7,new string[7]{ "Apples", "Cheese", "Meat", "Bread", "Vegetables", "Fish", "Ale" } },
+            {Trading.TAB_WEAPON_5,new string[5]{ "Bows", "Pickes", "Armor", "Swords", "Catapults" } },
+            {Trading.TAB_BANQUET_8,new string[8]{ "Venison", "Furniture", "Metalware", "Clothes", "Wine", "Salt", "Spice", "Silk" } },
+        };
         ImageReader reader;
         List<Coords> selling_types;
         List<int[]> resources;
         int[] targets;
-        int iterator_type = 0;
-        int iterator_res = 0;
-
+      
         public AutoTrading(double execute_rate_sec, double start_after_sec = 0)
         {
             if (start_after_sec != 0)
@@ -40,13 +52,21 @@ namespace LittleHelper.src
             if(resources == null)
             {
                 if (type == Trading.TAB_RESOURCES_4)
-                    this.resources.Add(new int[4] {0, 1, 2, 3 });
+                {
+                    this.resources.Add(new int[4] { 0, 1, 2, 3 });
+                }
                 else if (type == Trading.TAB_WEAPON_5)
+                {
                     this.resources.Add(new int[5] { 0, 1, 2, 3, 5 });
+                }
                 else if (type == Trading.TAB_FOOD_7)
+                {
                     this.resources.Add(new int[7] { 0, 1, 2, 3, 4, 5, 6 });
+                }
                 else if (type == Trading.TAB_BANQUET_8)
+                {
                     this.resources.Add(new int[8] { 0, 1, 2, 3, 4, 5, 6, 7 });
+                }
             }
             else
             this.resources.Add(resources);
@@ -70,6 +90,9 @@ namespace LittleHelper.src
 
             foreach (var x in targets)
             {
+                Controller.AutoClick(Trading.BUTTON_TARGETMENU);
+                Controller.AutoClick(Trading.TargetMenu.targets[x]);
+
                 Controller.AutoClick(selling_types[t_iter]);
                 Random rand = new Random();
                 Controller.AutoClick(Trading.RES_1);
@@ -88,13 +111,16 @@ namespace LittleHelper.src
                             Controller.AutoClick(selling_types[t_iter]);
                         }
                         if (r_iter == 0 && t_iter == 0)
+                        {
+                            Commands.WriteToLog("Nothing to sell");
                             break;
+                        }
+                            
                     }
                     else
                     {
-                        Controller.AutoClick(Trading.BUTTON_TARGETMENU);
-                        Controller.AutoClick(Trading.TargetMenu.targets[x]);
                         Controller.AutoClick(Trading.BUTTON_SELL);
+                        Commands.WriteToLog("Traders sended, Resource: " + log_dict[selling_types[t_iter]][r_iter] );
                         Thread.Sleep(rand.Next(800, 1200));
                         break;
                     }
@@ -105,9 +131,6 @@ namespace LittleHelper.src
                     Thread.Sleep(rand.Next(1800, 2300));
                 }
             }
-            iterator_res = (iterator_res + 1) % resources[iterator_type].Length;
-            if (iterator_res == 0)
-                iterator_type = (iterator_type + 1) % resources.Count;
             Completed();
         }
         public override bool IsReady()
@@ -120,4 +143,5 @@ namespace LittleHelper.src
             Commands.DoSomething();
         }
     }
+    
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LittleHelper.model;
+using LittleHalper.stat;
 
 namespace LittleHelper.src
 {
@@ -17,7 +17,6 @@ namespace LittleHelper.src
     {
         protected ExecuteMode   execute_mode;
         protected DateTime      last_execute;
-        protected DateTime      execute_alarm;
         protected bool          executed = false;
         protected double        execute_rate_sec;
         
@@ -40,8 +39,6 @@ namespace LittleHelper.src
                 case ExecuteMode.EveryTime:
                     TimeSpan time = DateTime.Now.Subtract(last_execute);
                     return time.TotalSeconds >= execute_rate_sec;
-                case ExecuteMode.Alarm:
-                    return DateTime.Now >= execute_alarm;
                 default:
                     return false;
             }

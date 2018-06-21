@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LittleHelper.model;
+using LittleHalper.stat;
 using System.Drawing;
 
 namespace LittleHelper.butcords
@@ -39,6 +39,7 @@ namespace LittleHelper.butcords
         {
             public static Coords SCOUT_BUTTON   = new Coords(1263, 201);
             public static Coords SEND_SCOUT     = new Coords(818, 561);
+            public static Coords X_BUTTON       = new Coords(905,204);
         }
         public static class PlayerInfo
         {

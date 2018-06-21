@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using LittleHelper.model;
+using LittleHalper.stat;
 
 namespace LittleHelper.butcords
 {
@@ -21,9 +21,9 @@ namespace LittleHelper.butcords
 
         //
 
-        public static ReadData HONOR = new ReadData(RECT_HONOR, 100, 6);
-        public static ReadData GOLD = new ReadData(RECT_GOLD, 100, 6);
-        public static ReadData FAIR = new ReadData(RECT_FAIR, 80, 6);
-        public static ReadData VILLAGES = new ReadData(RECT_VILLAGES, 100, 6);
+        //public static ReadData HONOR = new ReadData(RECT_HONOR, 100, 6);
+        //public static ReadData GOLD = new ReadData(RECT_GOLD, 100, 6);
+        //public static ReadData FAIR = new ReadData(RECT_FAIR, 80, 6);
+        //public static ReadData VILLAGES = new ReadData(RECT_VILLAGES, 100, 6);
     }
 }

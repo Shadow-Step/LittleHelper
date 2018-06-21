@@ -7,8 +7,9 @@ using System.Threading;
 using LittleHelper.butcords;
 using ImgRdr;
 using System.Drawing;
+using System.IO;
 
-namespace LittleHelper.model
+namespace LittleHalper.stat
 {
     enum CastleOptions
     {
@@ -21,9 +22,9 @@ namespace LittleHelper.model
     class Commands
     {
         static Random rand = new Random();
-        delegate void Operation();
+        public delegate void Operation(); // public
 
-        private static Dictionary<int, Operation> sleep_commands = new Dictionary<int, Operation>()
+        public static Dictionary<int, Operation> sleep_commands = new Dictionary<int, Operation>()
         {
             {0,()=>
             {
@@ -61,10 +62,19 @@ namespace LittleHelper.model
             } },
             {6,()=>
             {
-                Controller.AutoClick(MainScreen.TAB_RESEARCH);
+                
+                ImageReader reader = new ImageReader();
+                var x = reader.FindImageOnScreen(Research.READER_AREA,"research_bar.bmp",0);
+                if(x.Count == 0)
+                {
+                    Controller.AutoClick(MainScreen.TAB_RESEARCH);
+                    Thread.Sleep(2000);
+                    Controller.AutoClick(Research.SKILL_4);
+                    WriteToLog("I click research!");
+                }
                 Thread.Sleep(rand.Next(10000,15000));
             } },
-        };
+        }; // public
 
         public static void RepairCastle(int iterations, CastleOptions options)
         {
@@ -143,6 +153,18 @@ namespace LittleHelper.model
             }
             
         }
+        public static void ArmyBuy(Coords unit, int value)
+        {
+            Controller.AutoClick(MainScreen.TAB_VILLAGE);
+            Controller.AutoClick(Village.TAB_ARMY);
+                Thread.Sleep(rand.Next(800, 1200));
+                    for (int x = 0; x < value; x++)
+                    {
+                        Controller.AutoClick(unit);
+                        Thread.Sleep(rand.Next(50, 80));
+                    }
+            Commands.WriteToLog("Try to buy some catapults");
+        }
         public static void ResearchSkill(Coords tab, Coords skill)
         {
             Controller.AutoClick(MainScreen.TAB_RESEARCH);
@@ -195,6 +217,14 @@ namespace LittleHelper.model
             Thread.Sleep(1000);
         }
 
+        public static void WriteToLog(string message)
+        {
+            DateTime time = DateTime.Now;
+            using (StreamWriter stream = new StreamWriter("tlog.txt", true, Encoding.Default))
+            {
+                stream.WriteLine(time.ToLongTimeString() +" : "+ message);
+            }
+        }
 
         public static void DoSomething()
         {
@@ -226,6 +256,8 @@ namespace LittleHelper.model
                     Thread.Sleep(200);
                 }
                 Controller.AutoClick(MainScreen.Map.SEND_SCOUT);
+                Thread.Sleep(500);
+                Controller.AutoClick(MainScreen.Map.X_BUTTON);
             }
             public static void CollectStacks()
             {

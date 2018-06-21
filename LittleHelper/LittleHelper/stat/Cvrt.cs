@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LittleHelper.model
+namespace LittleHalper.stat
 {
     static class Cvrt
     {

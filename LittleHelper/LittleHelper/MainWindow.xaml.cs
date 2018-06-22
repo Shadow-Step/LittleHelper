@@ -13,9 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Threading;
-using System.Drawing;
+using System.Windows.Interop;
 using LittleHelper.butcords;
-using LittleHalper.stat;
+using LittleHelper.stat;
 using LittleHelper.src;
 using ImgRdr;
 
@@ -24,19 +24,25 @@ namespace LittleHelper
 {
     public partial class MainWindow : Window
     {
+        const int F5 = 0x74;
+        const int F8 = 0x77;
+        const int HotF5 = 0;
+        const int HotF8 = 1;
+
         Thread bot_thread;
+        IntPtr Hwnd = IntPtr.Zero;
+        HwndSource source;
+        Bot bot;
+        
 
         public MainWindow()
         {
             InitializeComponent();
             
-            bot_thread = new Thread(Start);
-            bot_thread.Start();
-
-            //ImageTest();
         }
         public void Start()
         {
+            
             Random rand = new Random();
             List<BaseInstruction> list = new List<BaseInstruction>();
 
@@ -95,12 +101,12 @@ namespace LittleHelper
 
             while (true)
             {
-                Thread.Sleep(rand.Next(2000, 5000));
                 foreach (var item in list)
                 {
                     item.Execute();
                 }
                 Commands.DoSomething();
+                Thread.Sleep(rand.Next(2000, 5000));
             }
         }
         public void CountDistance(int x, int y,double seconds)
@@ -112,10 +118,129 @@ namespace LittleHelper
         }
         public void ImageTest()
         {
+            
+            
             Thread.Sleep(2000);
             ImageReader reader = new ImageReader();
             //var x = reader.CheckColorSaturation(Research.READER_AREA, ColorEnum.Green, 200);
             var x = reader.FindImageOnScreen(MainScreen.READER_AREA, new WrapImg("research_bar.bmp", 0));
+        }
+        void Test()
+        {
+            List<bool> res = new List<bool>();
+            foreach (var item in ResList.Items)
+            {
+                res.Add((bool)((CheckBox)item).IsChecked);
+            }
+        }
+        private void InitBot(bool reset)
+        {
+            if(reset || bot == null)
+            bot = new Bot();
+
+            bot.AddScout((bool)AScout.IsChecked,0);
+            bot.AddTrader((bool)ATrade.IsChecked,0);
+            bot.AddAttack((bool)AAttack.IsChecked,0);
+        }
+        private void InitBot(bool reset, int defer)
+        {
+            if (reset || bot == null)
+                bot = new Bot();
+
+            bot.AddScout((bool)AScout.IsChecked,defer);
+            bot.AddTrader((bool)ATrade.IsChecked,defer);
+            bot.AddAttack((bool)AAttack.IsChecked,defer);
+        }
+        private IntPtr MsgListener(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            const int WM_HOTKEY = 0x0312;
+            switch (msg)
+            {
+                case WM_HOTKEY:
+                    var key = wParam.ToInt32();
+                    switch (key)
+                    {
+                        case HotF5:
+                            StartEndThread();
+                            break;
+                        case HotF8:
+                            PauseThread();
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return IntPtr.Zero;
+        }
+        private void StartEndThread()
+        {
+            if (bot_thread != null && bot_thread.IsAlive)
+            {
+                bot_thread.Abort();
+                bot_thread = null;
+                bot = null;
+            }
+            else
+            {
+                if (bot == null)
+                {
+                    InitBot(true,int.Parse(TextBox.Text));
+                }
+                bot_thread = new Thread(bot.Execute);
+                bot_thread.Start();
+                
+            }
+
+        }
+        private void PauseThread()
+        {
+           if(bot != null)
+            {
+                if (bot_thread != null && bot_thread.IsAlive)
+                {
+                    bot_thread.Abort();
+                    bot_thread = null;
+                }
+                else
+                {
+                    InitBot(false);
+                    bot_thread = new Thread(bot.Execute);
+                    bot_thread.Start();
+                }
+                    
+            }
+           else
+            {
+                InitBot(true);
+                bot_thread = new Thread(bot.Execute);
+                bot_thread.Start();
+            }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            source.RemoveHook(MsgListener);
+            source = null;
+            Controller.UnregisterHotKey(Hwnd, HotF5);
+            Controller.UnregisterHotKey(Hwnd, HotF8);
+
+            base.OnClosed(e);
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Hwnd = new WindowInteropHelper(this).Handle;
+            source = HwndSource.FromHwnd(Hwnd);
+            source.AddHook(MsgListener);
+
+            Controller.RegisterHotKey(Hwnd, HotF5, 0, F5);
+            Controller.RegisterHotKey(Hwnd, HotF8, 0, F8);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Test();
         }
     }
     

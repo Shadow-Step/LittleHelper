@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LittleHelper"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Closed="Window_Closed" Loaded="Window_Loaded" Icon="run.ico">
     <Grid>
-        
+        <Button Content="Button" Margin="330,190" Click="Button_Click"/>
+        <CheckBox Content="Scouting" x:Name="AScout" HorizontalAlignment="Left" Margin="330,111,0,0" VerticalAlignment="Top" Width="131"/>
+        <CheckBox Content="Trading" x:Name="ATrade" HorizontalAlignment="Left" Margin="330,132,0,0" VerticalAlignment="Top" Width="131"/>
+        <CheckBox Content="Attacking" x:Name="AAttack" HorizontalAlignment="Left" Margin="330,153,0,0" VerticalAlignment="Top" Width="131"/>
+        <ListBox x:Name="ResList" HorizontalAlignment="Left" Height="220" Margin="467,10,0,0" VerticalAlignment="Top" Width="315" SelectionMode="Multiple">
+            <CheckBox Content="Apples"/>
+            <CheckBox Content="Cheese"/>
+            <CheckBox Content="Meat"/>
+            <CheckBox Content="Bread"/>
+            <CheckBox Content="Vegetables"/>
+            <CheckBox Content="Fish"/>
+            <CheckBox Content="Ale"/>
+        </ListBox>
+        <TextBox x:Name="TextBox" HorizontalAlignment="Left" Height="26" Margin="330,235,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131"/>
+
     </Grid>
 </Window>

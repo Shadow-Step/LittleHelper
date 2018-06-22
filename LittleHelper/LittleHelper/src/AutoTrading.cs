@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LittleHalper.stat;
+using LittleHelper.stat;
 using LittleHelper.butcords;
 using System.Threading;
 using ImgRdr;

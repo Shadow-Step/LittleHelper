@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LittleHalper.stat;
+using LittleHelper.stat;
 using LittleHelper.butcords;
 using System.Threading;
 using ImgRdr;
@@ -94,17 +94,10 @@ namespace LittleHelper.src
 
         ImageReader reader;
 
-        public AutoScout(double execute_rate_sec, double start_after_sec = 0)
+        public AutoScout(double execute_rate_sec, double defer = 0)
         {
-            if (start_after_sec != 0)
-            {
-                last_execute = DateTime.Now;
-                this.execute_rate_sec = start_after_sec;
-            }
-            else
-            {
-                this.execute_rate_sec = execute_rate_sec;
-            }
+            last_execute = DateTime.Now;
+            this.execute_rate_sec = defer;
             this.reader = new ImageReader();
         }
         public void AddTarget(Resource resource)

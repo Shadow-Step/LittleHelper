@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ImgRdr;
-using LittleHalper.stat;
+using LittleHelper.stat;
 using LittleHelper.butcords;
 using System.Threading;
 
@@ -116,7 +116,7 @@ namespace LittleHelper.src
                     Commands.ResetVillageNumber();
                 }
             }
-            execute_rate_sec = Cvrt.ToSeconds(30, 0);
+            //execute_rate_sec = Cvrt.ToSeconds(30, 0);
             Commands.ActDectFilter(MainScreen.Filters.ERASE_FILTER);
         }
         public override void Completed()

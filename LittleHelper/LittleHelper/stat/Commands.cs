@@ -9,7 +9,7 @@ using ImgRdr;
 using System.Drawing;
 using System.IO;
 
-namespace LittleHalper.stat
+namespace LittleHelper.stat
 {
     enum CastleOptions
     {

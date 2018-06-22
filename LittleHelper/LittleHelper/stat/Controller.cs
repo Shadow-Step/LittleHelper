@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using ImgRdr;
 
-namespace LittleHalper.stat
+namespace LittleHelper.stat
 {
     class Controller
     {
@@ -23,6 +23,12 @@ namespace LittleHalper.stat
         
         [DllImport("user32.dll")]
         public static extern void mouse_event(UInt32 dwFlags, UInt32 dx, UInt32 dy, int dwData, IntPtr dwExtraInfo);
+        [DllImport("user32.dll")]
+        public static extern IntPtr FindWindowEx(int hwndParent, int hwndEnfant, int lpClasse, string title);
+        [DllImport("user32.dll")]
+        public static extern int RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, int vk);
+        [DllImport("user32.dll")]
+        public static extern int UnregisterHotKey(IntPtr hWnd, int id);
 
         public static int ToMilliseconds(int hours = 0, int minutes = 0, int seconds = 0)
         {

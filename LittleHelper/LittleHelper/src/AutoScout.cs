@@ -47,7 +47,7 @@ namespace LittleHelper.src
 
     class AutoScout : BaseInstruction
     {
-        private Dictionary<Resource, WrapImg> resdict = new Dictionary<Resource, WrapImg>()
+        static public Dictionary<Resource, WrapImg> resdict = new Dictionary<Resource, WrapImg>()
         {
             {Resource.Stack, new WrapImg("res\\res_stack_14.bmp", 14) },
 
@@ -79,12 +79,12 @@ namespace LittleHelper.src
             {Resource.Spice, new WrapImg("res\\res_spice_08.bmp", 8) },
             {Resource.Silk, new WrapImg("res\\res_silk_11.bmp", 11) }
         };
-
         private const double SCOUT_SPEED = 1.91;
         private Coords village_pos = new Coords(577, 415);
 
         private DateTime? card_ended;
         private int card_value = 1;
+        private int village;
 
         private List<WrapImg> targets = new List<WrapImg>();
         private List<double> return_time = new List<double>();
@@ -94,8 +94,9 @@ namespace LittleHelper.src
 
         ImageReader reader;
 
-        public AutoScout(double execute_rate_sec, double defer = 0)
+        public AutoScout(int village, double execute_rate_sec, double defer = 0)
         {
+            this.village = village;
             last_execute = DateTime.Now;
             this.execute_rate_sec = defer;
             this.reader = new ImageReader();
@@ -121,33 +122,39 @@ namespace LittleHelper.src
             if (!IsReady())
                 return;
 
-            Commands.ResetVillageNumber();
+            Commands.ResetVillageNumber(village);
             Commands.ZoomOutMap(1);
-            Commands.ActDectFilter(MainScreen.Filters.SCOUT_FILTER);
+            Commands.ActDectFilter(FilterEnabled.Scout);
 
             foreach (var item in targets)
             {
-                List<Pair> target = reader.FindImageOnScreen(MainScreen.READER_AREA, item);
+                List<Pair> target = reader.FindImageOnScreen(MainScreen.READER_AREA, item,true);
                 if(target.Count != 0)
                 {
-                    Thread.Sleep(2000);
-                    int scouts_onstack = Available_scouts / target.Count;
+                    Commands.WriteToScoutLog($"{village}| Founded \"{item.Path.Substring(8, item.Path.Length - 15)}\" {target.Count}");
+                    int scouts_onstack = target.Count > Available_scouts ? 1 : Available_scouts / target.Count;
                     foreach (var stc in target)
                     {
                         if (!AlreadySended(stc))
                         {
                             Controller.AutoClick(stc);
                             Controller.AutoClick(MainScreen.MIDDLE_OFSCREEN);
-                            Thread.Sleep(1000);
                             Commands.Scouting.SendScout(scouts_onstack);
-
                             sended_scouts.Add(new ScoutTarget(scouts_onstack, CountNextExecute(new Coords(stc.X, stc.Y)), DateTime.Now, stc));
                             Available_scouts -= scouts_onstack;
                             last_execute = DateTime.Now;
-                            //return_time.Add(CountNextExecute(new Coords(stc.X, stc.Y)));
-                            Commands.WriteToLog("Scouts sended: " + scouts_onstack.ToString() + " | Resource: " + item.Path.Substring(8, item.Path.Length - 15));
-                            Commands.ResetVillageNumber();
-                            Commands.ZoomOutMap(1);
+                            Commands.WriteToScoutLog(village.ToString() + "| Scouts sended: " + scouts_onstack.ToString() + " Resource: " + item.Path.Substring(8, item.Path.Length - 15));
+
+                            if (Available_scouts > 0)
+                            {
+                                Commands.ResetVillageNumber(village);
+                                Commands.ZoomOutMap(1);
+                            }
+                            else
+                            {
+                                Completed();
+                                return;
+                            }
                         }
                     }
                     if (Available_scouts == 0)
@@ -160,7 +167,8 @@ namespace LittleHelper.src
 
             Commands.WriteToLog("No resources on the map");
             execute_rate_sec = 120;
-            
+            Completed();
+
         }
         public override bool IsReady()
         {
@@ -183,7 +191,8 @@ namespace LittleHelper.src
             //execute_rate_sec = max;
             //return_time.Clear();
 
-            Commands.DoSomething();
+            //Commands.DoSomething();
+            Commands.WriteToScoutLog("---------------");
         }
         
         private bool AlreadySended(Pair pos)

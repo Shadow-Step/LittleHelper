@@ -85,18 +85,18 @@ namespace LittleHelper.src
             Controller.AutoClick(MainScreen.TAB_VILLAGE);
             Controller.AutoClick(Village.TAB_TRADE);
 
-            int t_iter = 0;
-            int r_iter = 0;
-
             foreach (var x in targets)
             {
-                Controller.AutoClick(Trading.BUTTON_TARGETMENU);
-                Controller.AutoClick(Trading.TargetMenu.targets[x]);
+                int t_iter = 0; // Type iterator
+                int r_iter = 0; // Resource iterator
 
-                Controller.AutoClick(selling_types[t_iter]);
+                Controller.AutoClick(Trading.BUTTON_TARGETMENU);
+                Controller.AutoClick(Trading.TargetMenu.targets[x]); // Select target
+
+                Controller.AutoClick(selling_types[t_iter]); // Select type
                 Random rand = new Random();
-                Controller.AutoClick(Trading.RES_1);
-                Controller.AutoClick(Trading.RES_2);
+                Controller.AutoClick(Trading.RES_1); //RESET
+                Controller.AutoClick(Trading.RES_2); //RESET
 
                 while (true)
                 {
@@ -120,7 +120,7 @@ namespace LittleHelper.src
                     else
                     {
                         Controller.AutoClick(Trading.BUTTON_SELL);
-                        Commands.WriteToLog("Traders sended, Resource: " + log_dict[selling_types[t_iter]][r_iter] );
+                        Commands.WriteToLog("Traders sended, Resource: " + log_dict[selling_types[t_iter]][resources[t_iter][r_iter]] );
                         Thread.Sleep(rand.Next(800, 1200));
                         break;
                     }

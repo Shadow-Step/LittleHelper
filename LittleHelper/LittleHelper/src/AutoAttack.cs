@@ -22,6 +22,7 @@ namespace LittleHelper.src
     {
         private Coords village_pos = new Coords(577,415);
         private const double CAP_SPEED = 0.70;
+        private int village;
 
         ImageReader reader;
 
@@ -42,7 +43,7 @@ namespace LittleHelper.src
             new WrapImg("cst\\castle_3.bmp", 13),
         };
 
-        public AutoAttack(double execute_rate_sec,double start_after_sec = 0)
+        public AutoAttack(int village, double execute_rate_sec,double start_after_sec = 0)
         {
             if(start_after_sec != 0)
             {
@@ -53,6 +54,7 @@ namespace LittleHelper.src
             {
                 this.execute_rate_sec = execute_rate_sec;
             }
+            this.village = village;
             this.reader = new ImageReader();
         }
         public void AddTarget(AIName name, int castle_level,int formation, int army_cost = 100)
@@ -64,8 +66,8 @@ namespace LittleHelper.src
         {
             if (!IsReady())
                 return;
-            Commands.ResetVillageNumber();
-            Commands.ActDectFilter(MainScreen.Filters.AI_FILTER);
+            Commands.ResetVillageNumber(village);
+            Commands.ActDectFilter(FilterEnabled.AI);
             foreach (var castle in castles) // Check default types
             {
                 List<Pair> exist_castles = reader.FindImageOnScreen(MainScreen.READER_AREA, castle);
@@ -79,7 +81,6 @@ namespace LittleHelper.src
                         Thread.Sleep(1000);
 
                         List<Pair> shields = new List<Pair>();
-
                         foreach (var shield in targets)
                         {
                             shields = reader.FindImageOnScreen(MainScreen.SELECTED_CASTLE_AREA,shields_dict[shield.Name]);
@@ -113,7 +114,7 @@ namespace LittleHelper.src
                         
                     }
                     Commands.WriteToLog("No castles to attack");
-                    Commands.ResetVillageNumber();
+                    Commands.ResetVillageNumber(village);
                 }
             }
             //execute_rate_sec = Cvrt.ToSeconds(30, 0);

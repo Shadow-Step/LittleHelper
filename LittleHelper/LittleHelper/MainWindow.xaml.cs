@@ -18,7 +18,8 @@ using LittleHelper.butcords;
 using LittleHelper.stat;
 using LittleHelper.src;
 using ImgRdr;
-
+using System.Drawing;
+using System.IO;
 
 namespace LittleHelper
 {
@@ -38,7 +39,7 @@ namespace LittleHelper
         public MainWindow()
         {
             InitializeComponent();
-            
+            //ImageTest();
         }
         public void Start()
         {
@@ -47,8 +48,8 @@ namespace LittleHelper
             List<BaseInstruction> list = new List<BaseInstruction>();
 
             AutoTrading trader = new AutoTrading(Cvrt.ToSeconds(2,24) * 2);
-            AutoScout scout = new AutoScout(100);
-            AutoAttack attack = new AutoAttack(100);
+            AutoScout scout = new AutoScout(0,100);
+            AutoAttack attack = new AutoAttack(0,100);
 
             attack.AddTarget(AIName.Rat, 0, 1);
             attack.AddTarget(AIName.Rat, 1, 1);
@@ -118,25 +119,32 @@ namespace LittleHelper
         }
         public void ImageTest()
         {
-            
-            
             Thread.Sleep(2000);
             ImageReader reader = new ImageReader();
-            //var x = reader.CheckColorSaturation(Research.READER_AREA, ColorEnum.Green, 200);
-            var x = reader.FindImageOnScreen(MainScreen.READER_AREA, new WrapImg("research_bar.bmp", 0));
+            var time = DateTime.Now;
+            List<int> asd = new List<int>();
+            foreach (var item in AutoScout.resdict)
+            {
+                var x = reader.FindImageOnScreen(MainScreen.READER_AREA, item.Value,true);
+                asd.Add(x.Count);
+
+            }
+
+            var nstop = DateTime.Now.Subtract(time).TotalSeconds;
+
+            var screeshot_time = ImageReader.screen_time;
+            var color_list = ImageReader.color_time;
+            var find_time = ImageReader.find_time;
+
         }
         void Test()
         {
-            List<bool> res = new List<bool>();
-            foreach (var item in ResList.Items)
-            {
-                res.Add((bool)((CheckBox)item).IsChecked);
-            }
+           
         }
         private void InitBot(bool reset)
         {
             if(reset || bot == null)
-            bot = new Bot();
+            bot = new Bot(int.Parse(TextBoxVillages.Text));
 
             bot.AddScout((bool)AScout.IsChecked,0);
             bot.AddTrader((bool)ATrade.IsChecked,0);
@@ -145,7 +153,7 @@ namespace LittleHelper
         private void InitBot(bool reset, int defer)
         {
             if (reset || bot == null)
-                bot = new Bot();
+                bot = new Bot(int.Parse(TextBoxVillages.Text));
 
             bot.AddScout((bool)AScout.IsChecked,defer);
             bot.AddTrader((bool)ATrade.IsChecked,defer);

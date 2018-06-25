@@ -11,16 +11,10 @@
         <CheckBox Content="Scouting" x:Name="AScout" HorizontalAlignment="Left" Margin="330,111,0,0" VerticalAlignment="Top" Width="131"/>
         <CheckBox Content="Trading" x:Name="ATrade" HorizontalAlignment="Left" Margin="330,132,0,0" VerticalAlignment="Top" Width="131"/>
         <CheckBox Content="Attacking" x:Name="AAttack" HorizontalAlignment="Left" Margin="330,153,0,0" VerticalAlignment="Top" Width="131"/>
-        <ListBox x:Name="ResList" HorizontalAlignment="Left" Height="220" Margin="467,10,0,0" VerticalAlignment="Top" Width="315" SelectionMode="Multiple">
-            <CheckBox Content="Apples"/>
-            <CheckBox Content="Cheese"/>
-            <CheckBox Content="Meat"/>
-            <CheckBox Content="Bread"/>
-            <CheckBox Content="Vegetables"/>
-            <CheckBox Content="Fish"/>
-            <CheckBox Content="Ale"/>
-        </ListBox>
-        <TextBox x:Name="TextBox" HorizontalAlignment="Left" Height="26" Margin="330,235,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131"/>
+        <TextBox x:Name="TextBox" HorizontalAlignment="Left" Height="26" Margin="330,235,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="131" Text="0"/>
+        <Label Content="Defer" HorizontalAlignment="Left" Margin="287,235,0,0" VerticalAlignment="Top"/>
+        <Label Content="Villages" HorizontalAlignment="Left" Margin="276,263,0,0" VerticalAlignment="Top" Width="62"/>
+        <TextBox x:Name="TextBoxVillages" HorizontalAlignment="Left" Height="23" Margin="330,266,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="131"/>
 
     </Grid>
 </Window>

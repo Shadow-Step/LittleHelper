@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.IO;
 
 namespace ImgRdr
 {
@@ -17,7 +18,11 @@ namespace ImgRdr
     {
         private static int temp = 0; //temp;
         private int alpha = 15;
-        
+
+        public static double color_time = 0;
+        public static double find_time = 0;
+        public static double screen_time = 0;
+
         public List<Pair> FindImageOnScreen(Rectangle area, Bitmap example, int bias_y)
         {
             Bitmap image = new Bitmap(area.Width, area.Height);
@@ -52,6 +57,27 @@ namespace ImgRdr
             else
                 return FindAllPairs(image, area, GetExampleColorList(example_image, example.Bias_Y),example.Path);
         }
+        public List<Pair> FindImageOnScreen(Rectangle area, WrapImg example,bool asd)
+        {
+            this.alpha = example.Alpha;
+            
+            
+
+            var start = DateTime.Now; // DEBUG
+            Bitmap example_image = (Bitmap)Bitmap.FromFile(example.Path);
+            Bitmap image = new Bitmap(area.Width, area.Height);
+            using (Graphics graph = Graphics.FromImage(image))
+            {
+                graph.CopyFromScreen(area.X, area.Y, 0, 0, image.Size);
+            }
+            screen_time += DateTime.Now.Subtract(start).TotalSeconds; //DEBUG
+
+            if (example.Diagonal)
+                return FindAllDiagonalPairs(image, area, GetExampleColorList(example_image, example.Bias_Y, example.Bias_X));
+            else
+                return FindAllPairs(image, area, GetExampleColorList(example_image, example.Bias_Y));
+        }
+
         public bool CheckColorSaturation(Rectangle area, ColorEnum color, int threshold)
         {
             Bitmap image = new Bitmap(area.Width, area.Height);
@@ -127,12 +153,55 @@ namespace ImgRdr
         }
         private List<Color> GetExampleColorList(Bitmap example,int bias_y = 0)
         {
+            var start = DateTime.Now; //DEBUG
             List<Color> color_list = new List<Color>(example.Width);
             for (int i = 0; i < example.Width; i++)
             {
                 color_list.Add(example.GetPixel(i, bias_y));
             }
+            color_time += DateTime.Now.Subtract(start).TotalSeconds;//DEBUG
             return color_list;
+        }
+        private List<Pair> FindAllPairs(Bitmap image, Rectangle area, List<Color> color_list)
+        {
+            var start = DateTime.Now; //DEBUG
+            byte[] img;
+            using (MemoryStream stream = new MemoryStream())
+            {
+                image.Save(stream, System.Drawing.Imaging.ImageFormat.Bmp);
+                img = stream.ToArray();
+            }
+            int bias = BitConverter.ToInt32(img, 10);
+            List<Pair> pairs = new List<Pair>();
+            int step = 0;
+            for (int y = image.Height-1, i = bias; y >= 0; y--)
+            {
+                for (int x = 0 ; x < image.Width; x++,i+=4)
+                {
+                    int b = Math.Abs(img[i] - color_list[step].B);
+                    int g = Math.Abs(img[i + 1] - color_list[step].G);
+                    int r = Math.Abs(img[i + 2] - color_list[step].R);
+
+                    if (r < alpha && g < alpha && b < alpha)
+                    {
+                        step++;
+                        if (step >= color_list.Count * 0.80)
+                        {
+                            pairs.Add(new Pair((x - color_list.Count / 2) + area.X, y + area.Y));
+                            step = 0;
+                        }
+
+                    }
+                    else
+                    {
+                        step = 0;
+                    }
+                }
+            }
+
+            find_time += DateTime.Now.Subtract(start).TotalSeconds; //DEBUG
+
+            return pairs;
         }
         private List<Pair> FindAllPairs(Bitmap image,Rectangle area, List<Color> color_list, string name = "none")
         {
@@ -148,7 +217,7 @@ namespace ImgRdr
                     int b = Math.Abs(pixel.B - color_list[step].B);
                     if (r < alpha && g < alpha && b < alpha)
                     {
-                        image.SetPixel(x, y, Color.Red);//temp
+                        //image.SetPixel(x, y, Color.Red);//temp
                         step++;
                         if(step >= color_list.Count * 0.80)
                         {
@@ -163,7 +232,7 @@ namespace ImgRdr
                     }
                 }
             }
-            image.Save($"log\\test.bmp"); // temp;
+            //image.Save($"log\\test.bmp"); // temp;
             temp++; // temp;
             return pairs;
         }
@@ -189,7 +258,7 @@ namespace ImgRdr
                             int b = Math.Abs(pixel.B - color_list[step].B);
                             if (r < alpha && g < alpha && b < alpha)
                             {
-                                image.SetPixel(x + i, y + i, Color.Red);//temp
+                                //image.SetPixel(x + i, y + i, Color.Red);//temp
                                 step++;
                                 if (step >= color_list.Count * 0.80)
                                 {
@@ -206,7 +275,7 @@ namespace ImgRdr
                     }
                 }
             }
-            image.Save($"log\\test.bmp"); // temp;
+            //image.Save($"log\\test.bmp"); // temp;
             temp++; // temp;
             return pairs;
         }

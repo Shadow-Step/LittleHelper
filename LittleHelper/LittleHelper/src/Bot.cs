@@ -15,7 +15,15 @@ namespace LittleHelper.src
         AutoScout   Scout   = null;
         AutoTrading Trader  = null;
         AutoAttack  Attack  = null;
-        
+
+        List<AutoScout> Test = new List<AutoScout>();
+
+        public int Villages { get; set; }
+
+        public Bot(int villages)
+        {
+            Villages = villages;
+        }
         public void Execute()
         {
             Random rand = new Random();
@@ -31,55 +39,63 @@ namespace LittleHelper.src
                 Thread.Sleep(rand.Next(2000, 5000));
             }
         }
-
         public void AddScout(bool isChecked, int defer)
         {
            if(isChecked)
             {
                 if(Scout == null)
                 {
-                    Scout = new AutoScout(defer);
+                    for (int i = 0; i < Villages; i++)
+                    {
+                        Scout = new AutoScout(i,defer);
 
-                    Scout.AddTarget(Resource.Swords);
-                    Scout.AddTarget(Resource.Stack);
+                        
+                        Scout.AddTarget(Resource.Stack);
 
-                    Scout.AddTarget(Resource.Pitch);
-                    Scout.AddTarget(Resource.Iron);
+                        Scout.AddTarget(Resource.Pitch);
+                        Scout.AddTarget(Resource.Iron);
+                        Scout.AddTarget(Resource.Stone);
+                        Scout.AddTarget(Resource.Wood);
 
+                        Scout.AddTarget(Resource.Catapults);
+                        Scout.AddTarget(Resource.Bows);
+                        //Scout.AddTarget(Resource.Swords);
+                        Scout.AddTarget(Resource.Armor);
+                        Scout.AddTarget(Resource.Pickes);
 
-                    Scout.AddTarget(Resource.Catapults);
-                    Scout.AddTarget(Resource.Bows);
+                        Scout.AddTarget(Resource.Wine);
+                        Scout.AddTarget(Resource.Salt);
+                        Scout.AddTarget(Resource.Spice);
+                        Scout.AddTarget(Resource.Silk);
+                        Scout.AddTarget(Resource.Venison);
+                        Scout.AddTarget(Resource.Furniture);
+                        Scout.AddTarget(Resource.Clothes);
+                        Scout.AddTarget(Resource.MetalWare);
 
-                    Scout.AddTarget(Resource.Armor);
-                    Scout.AddTarget(Resource.Pickes);
+                        Scout.AddTarget(Resource.Fish);
+                        Scout.AddTarget(Resource.Vegetables);
+                        Scout.AddTarget(Resource.Ale);
+                        Scout.AddTarget(Resource.Bread);
+                        Scout.AddTarget(Resource.Meat);
+                        Scout.AddTarget(Resource.Cheese);
+                        Scout.AddTarget(Resource.Apples);
 
-                    Scout.AddTarget(Resource.Wine);
-                    Scout.AddTarget(Resource.Salt);
-                    Scout.AddTarget(Resource.Spice);
-                    Scout.AddTarget(Resource.Silk);
-                    Scout.AddTarget(Resource.Venison);
-                    Scout.AddTarget(Resource.Furniture);
-                    Scout.AddTarget(Resource.Clothes);
-                    Scout.AddTarget(Resource.MetalWare);
+                        
 
-                    Scout.AddTarget(Resource.Fish);
-                    Scout.AddTarget(Resource.Vegetables);
-                    Scout.AddTarget(Resource.Ale);
-                    Scout.AddTarget(Resource.Bread);
-                    Scout.AddTarget(Resource.Meat);
-                    Scout.AddTarget(Resource.Cheese);
-                    Scout.AddTarget(Resource.Apples);
-
-                    Scout.AddTarget(Resource.Stone);
-                    Scout.AddTarget(Resource.Wood);
-
-                    commands.Add(Scout);
+                        commands.Add(Scout);
+                    }
+                    
                 }
             }
            else
             {
+               
                 if(Scout != null)
                 {
+                    foreach (var item in Test)
+                    {
+                        commands.Remove(item);
+                    }
                     commands.Remove(Scout);
                     Scout = null;
                 }
@@ -96,9 +112,9 @@ namespace LittleHelper.src
                     Trader = new AutoTrading(Cvrt.ToSeconds(2, 24) * 2 , defer);
 
                     Trader.AddSellingType(Trading.TAB_RESOURCES_4, 3);
-                    Trader.AddSellingType(Trading.TAB_BANQUET_8, null);
-                    Trader.AddSellingType(Trading.TAB_FOOD_7, null);
-                    Trader.AddTargets(0);
+                    //Trader.AddSellingType(Trading.TAB_BANQUET_8, null);
+                    //Trader.AddSellingType(Trading.TAB_FOOD_7, null);
+                    Trader.AddTargets(1);
 
                     commands.Add(Trader);
                 }
@@ -118,13 +134,17 @@ namespace LittleHelper.src
             {
                 if(Attack == null)
                 {
-                    Attack = new AutoAttack(defer);
+                    for (int i = 0; i < Villages; i++)
+                    {
+                        Attack = new AutoAttack(i,defer);
 
-                    Attack.AddTarget(AIName.Rat, 0, 1);
-                    Attack.AddTarget(AIName.Rat, 1, 1);
-                    Attack.AddTarget(AIName.Rat, 2, 3);
+                        Attack.AddTarget(AIName.Rat, 0, 1);
+                        Attack.AddTarget(AIName.Rat, 1, 1);
+                        //Attack.AddTarget(AIName.Rat, 2, 3);
 
-                    commands.Add(Attack);
+                        commands.Add(Attack);
+                    }
+                   
                 }
             }
             else

@@ -8,6 +8,13 @@ using System.Drawing;
 
 namespace LittleHelper.butcords
 {
+    enum FilterEnabled
+    {
+        None,
+        Scout,
+        Army,
+        AI
+    }
     class MainScreen
     {
         //MAIN BAR
@@ -43,13 +50,31 @@ namespace LittleHelper.butcords
         }
         public static class PlayerInfo
         {
-            public static Coords VILLAGE_1 = new Coords(820,315);
+            public static Coords VILLAGE_1 = new Coords(820, 315);
+            public static Coords VILLAGE_2 = new Coords(820, 350);
+            public static Coords VILLAGE_3 = new Coords(820, 385);
+            public static Coords VILLAGE_4 = new Coords(820, 420);
+            public static Coords VILLAGE_5 = new Coords(820, 455);
+            public static Coords VILLAGE_6 = new Coords(820, 490);
+            public static Coords VILLAGE_7 = new Coords(820, 525);
+            public static Coords VILLAGE_8 = new Coords(820, 560);
+            public static Coords VILLAGE_9 = new Coords(820, 595);
+            public static Coords VILLAGE_10 = new Coords(820, 630);
+            public static List<Coords> village_list = new List<Coords>() { VILLAGE_1, VILLAGE_2, VILLAGE_3, VILLAGE_4, VILLAGE_5, VILLAGE_6, VILLAGE_7 };
         }
         public static class Filters
         {
+            public static FilterEnabled filterEnabled = FilterEnabled.None;
             public static Coords SCOUT_FILTER = new Coords(1228, 228);
             public static Coords ARMY_FILTER = new Coords(1264, 228);
             public static Coords AI_FILTER = new Coords(1298, 228);
+
+            public static Dictionary<FilterEnabled, Coords> filters = new Dictionary<FilterEnabled, Coords>()
+            {
+                { FilterEnabled.Scout, SCOUT_FILTER},
+                { FilterEnabled.Army, ARMY_FILTER},
+                { FilterEnabled.AI, AI_FILTER}
+            };
 
             public static Coords ERASE_FILTER = new Coords(1221, 362);
         }

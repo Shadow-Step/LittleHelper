@@ -46,7 +46,9 @@ namespace LittleHelper.butcords
             public static Coords TARGET_1 = new Coords(600, 310);
             public static Coords TARGET_2 = new Coords(600, 328);
             public static Coords TARGET_3 = new Coords(600, 346);
-            public static List<Coords> targets = new List<Coords>() { TARGET_0, TARGET_1, TARGET_2, TARGET_3 };
+            public static Coords TARGET_4 = new Coords(600, 363);
+            public static Coords TARGET_5 = new Coords(600, 382);
+            public static List<Coords> targets = new List<Coords>() { TARGET_0, TARGET_1, TARGET_2, TARGET_3, TARGET_4, TARGET_5 };
         }
         
     }

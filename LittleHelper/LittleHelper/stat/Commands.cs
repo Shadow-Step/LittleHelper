@@ -18,10 +18,12 @@ namespace LittleHelper.stat
         RepairAndRestoreCastle,
         RepairAll
     }
-   
+    
+
     class Commands
     {
         static Random rand = new Random();
+        
         public delegate void Operation(); // public
 
         public static Dictionary<int, Operation> sleep_commands = new Dictionary<int, Operation>()
@@ -199,6 +201,15 @@ namespace LittleHelper.stat
             Thread.Sleep(rand.Next(4000,6000));
             Controller.AutoClick(MainScreen.PlayerInfo.VILLAGE_1);
         }
+        public static void ResetVillageNumber(int number)
+        {
+            Controller.AutoClick(MainScreen.TAB_VILLAGE);
+            Controller.AutoClick(MainScreen.TAB_MAP);
+            Controller.AutoClick(MainScreen.PLAYERINFO_BUTTON);
+            Thread.Sleep(rand.Next(2000, 3000));
+            Controller.AutoClick(MainScreen.PlayerInfo.village_list[number]);
+            Thread.Sleep(2000);
+        }
         public static void ZoomOutMap(int times)
         {
             Controller.WheelRotate(-1, times);
@@ -216,6 +227,22 @@ namespace LittleHelper.stat
             Controller.AutoClick(filter);
             Thread.Sleep(1000);
         }
+        public static void ActDectFilter(FilterEnabled filter)
+        {
+            if (MainScreen.Filters.filterEnabled != filter)
+            {
+                Controller.AutoClick(MainScreen.TAB_VILLAGE);
+                Controller.AutoClick(MainScreen.TAB_MAP);
+                Controller.MoveTo(MainScreen.FILTER_BUTTON);
+                Thread.Sleep(100);
+                Controller.MoveTo(1360 / 2, 768 / 2);
+                Thread.Sleep(1000);
+                Controller.AutoClick(MainScreen.FILTER_BUTTON);
+                Controller.AutoClick(MainScreen.Filters.filters[filter]);
+                MainScreen.Filters.filterEnabled = filter;
+                Thread.Sleep(1000);
+            }
+        }
 
         public static void WriteToLog(string message)
         {
@@ -223,6 +250,14 @@ namespace LittleHelper.stat
             using (StreamWriter stream = new StreamWriter("tlog.txt", true, Encoding.Default))
             {
                 stream.WriteLine(time.ToLongTimeString() +" : "+ message);
+            }
+        }
+        public static void WriteToScoutLog(string message)
+        {
+            DateTime time = DateTime.Now;
+            using (StreamWriter stream = new StreamWriter("scoutlog.txt", true, Encoding.Default))
+            {
+                stream.WriteLine(time.ToLongTimeString() + " : " + message);
             }
         }
 
@@ -247,13 +282,13 @@ namespace LittleHelper.stat
                 for (int i = 0; i < 8; i++)
                 {
                     Controller.Click();
-                    Thread.Sleep(200);
+                    Thread.Sleep(100);
                 }
                 Controller.MoveTo(SCOUT_PLUS);
                 for (int i = 1; i < value; i++)
                 {
                     Controller.Click();
-                    Thread.Sleep(200);
+                    Thread.Sleep(100);
                 }
                 Controller.AutoClick(MainScreen.Map.SEND_SCOUT);
                 Thread.Sleep(500);

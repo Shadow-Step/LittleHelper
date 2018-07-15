@@ -20,6 +20,7 @@ namespace LittleHelper.butcords
         public static Coords BUTTON_TARGETMENU = new Coords(670, 250);
         public static Coords BUTTON_BUY = new Coords(1070, 340);
         public static Coords BUTTON_SELL = new Coords(1070, 537);
+        public static Coords BUTTON_TOOFAR = new Coords(678,408);
 
         /// <summary> Wood, Apples, Bows, Venison </summary>
         public static Coords RES_1 = new Coords(320, 355);
@@ -48,7 +49,23 @@ namespace LittleHelper.butcords
             public static Coords TARGET_3 = new Coords(600, 346);
             public static Coords TARGET_4 = new Coords(600, 363);
             public static Coords TARGET_5 = new Coords(600, 382);
-            public static List<Coords> targets = new List<Coords>() { TARGET_0, TARGET_1, TARGET_2, TARGET_3, TARGET_4, TARGET_5 };
+            public static Coords TARGET_6 = new Coords(600, 400);
+            public static Coords TARGET_7 = new Coords(600, 418);
+            public static List<Coords> targets = new List<Coords>()
+            {
+               new Coords(600, 292), //0
+               new Coords(600, 310), //1
+               new Coords(600, 328), //2
+               new Coords(600, 346), //3
+               new Coords(600, 364), //4
+               new Coords(600, 382), //5
+               new Coords(600, 400), //6
+               new Coords(600, 418), //7
+               new Coords(600, 436), //8
+               new Coords(600, 454)  //9
+
+            };
+            //public static List<Coords> targets = new List<Coords>() { TARGET_0, TARGET_1, TARGET_2, TARGET_3, TARGET_4, TARGET_5, TARGET_6 };
         }
         
     }

@@ -43,17 +43,10 @@ namespace LittleHelper.src
             new WrapImg("cst\\castle_3.bmp", 13),
         };
 
-        public AutoAttack(int village, double execute_rate_sec,double start_after_sec = 0)
+        public AutoAttack(int village, double delayed_launch = 0)
         {
-            if(start_after_sec != 0)
-            {
-                last_execute = DateTime.Now;
-                this.execute_rate_sec = start_after_sec;
-            }
-            else
-            {
-                this.execute_rate_sec = execute_rate_sec;
-            }
+            this.last_execute = DateTime.Now;
+            this.execute_rate_sec = delayed_launch;
             this.village = village;
             this.reader = new ImageReader();
         }

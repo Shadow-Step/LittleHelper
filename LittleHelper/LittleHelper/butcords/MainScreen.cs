@@ -60,8 +60,21 @@ namespace LittleHelper.butcords
             public static Coords VILLAGE_8 = new Coords(820, 560);
             public static Coords VILLAGE_9 = new Coords(820, 595);
             public static Coords VILLAGE_10 = new Coords(820, 630);
-            public static List<Coords> village_list = new List<Coords>() { VILLAGE_1, VILLAGE_2, VILLAGE_3, VILLAGE_4, VILLAGE_5, VILLAGE_6, VILLAGE_7 };
-        }
+            //public static List<Coords> village_list = new List<Coords>() { VILLAGE_1, VILLAGE_2, VILLAGE_3, VILLAGE_4, VILLAGE_5, VILLAGE_6, VILLAGE_7 };
+            public static List<Coords> village_list = new List<Coords>()
+            {
+                new Coords(820, 315),
+                new Coords(820, 350),
+                new Coords(820, 385),
+                new Coords(820, 420),
+                new Coords(820, 455),
+                new Coords(820, 490),
+                new Coords(820, 525),
+                new Coords(820, 560),
+                new Coords(820, 595),
+                new Coords(820, 630)
+            };
+            }
         public static class Filters
         {
             public static FilterEnabled filterEnabled = FilterEnabled.None;

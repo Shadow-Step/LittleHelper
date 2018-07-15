@@ -27,24 +27,15 @@ namespace LittleHelper.src
             {Trading.TAB_BANQUET_8,new string[8]{ "Venison", "Furniture", "Metalware", "Clothes", "Wine", "Salt", "Spice", "Silk" } },
         };
         ImageReader reader;
-        List<Coords> selling_types;
-        List<int[]> resources;
+        List<Coords> selling_types = new List<Coords>();
+        List<int[]> resources = new List<int[]>();
         int[] targets;
       
-        public AutoTrading(double execute_rate_sec, double start_after_sec = 0)
+        public AutoTrading(double execute_rate_sec, double delayed_launch = 0)
         {
-            if (start_after_sec != 0)
-            {
-                last_execute = DateTime.Now;
-                this.execute_rate_sec = start_after_sec;
-            }
-            else
-            {
-                this.execute_rate_sec = execute_rate_sec;
-            }
-            reader = new ImageReader();
-            this.selling_types = new List<Coords>();
-            this.resources = new List<int[]>();
+            this.last_execute = DateTime.Now;
+            this.execute_rate_sec = delayed_launch;
+            this.reader = new ImageReader();
         }
         public void AddSellingType(Coords type, params int[]resources)
         {
@@ -120,6 +111,7 @@ namespace LittleHelper.src
                     else
                     {
                         Controller.AutoClick(Trading.BUTTON_SELL);
+                        Controller.AutoClick(Trading.BUTTON_TOOFAR);
                         Commands.WriteToLog("Traders sended, Resource: " + log_dict[selling_types[t_iter]][resources[t_iter][r_iter]] );
                         Thread.Sleep(rand.Next(800, 1200));
                         break;

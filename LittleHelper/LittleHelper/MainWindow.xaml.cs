@@ -141,88 +141,54 @@ namespace LittleHelper
         {
            
         }
+
         private void InitBot(bool reset)
         {
-            if(reset || bot == null)
-            bot = new Bot(int.Parse(TextBoxVillages.Text));
-
-            bot.AddScout((bool)AScout.IsChecked,0);
-            bot.AddTrader((bool)ATrade.IsChecked,0);
-            bot.AddAttack((bool)AAttack.IsChecked,0);
-        }
-        private void InitBot(bool reset, int defer)
-        {
             if (reset || bot == null)
-                bot = new Bot(int.Parse(TextBoxVillages.Text));
-
-            bot.AddScout((bool)AScout.IsChecked,defer);
-            bot.AddTrader((bool)ATrade.IsChecked,defer);
-            bot.AddAttack((bool)AAttack.IsChecked,defer);
-        }
-        private IntPtr MsgListener(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            const int WM_HOTKEY = 0x0312;
-            switch (msg)
+                bot = new Bot(int.Parse(TextBoxVillages.Text), int.Parse(TextBoxDelay.Text));
+            if (bot == null)
             {
-                case WM_HOTKEY:
-                    var key = wParam.ToInt32();
-                    switch (key)
-                    {
-                        case HotF5:
-                            StartEndThread();
-                            break;
-                        case HotF8:
-                            PauseThread();
-                            break;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            return IntPtr.Zero;
-        }
-        private void StartEndThread()
-        {
-            if (bot_thread != null && bot_thread.IsAlive)
-            {
-                bot_thread.Abort();
-                bot_thread = null;
-                bot = null;
+                bot.AddScout((bool)AScout.IsChecked, int.Parse(TextBoxDelay.Text));
+                bot.AddTrader((bool)ATrade.IsChecked, int.Parse(TextBoxDelay.Text));
+                bot.AddAttack((bool)AAttack.IsChecked, int.Parse(TextBoxDelay.Text));
             }
             else
             {
-                if (bot == null)
-                {
-                    InitBot(true,int.Parse(TextBox.Text));
-                }
+                bot.AddScout((bool)AScout.IsChecked, 0);
+                bot.AddTrader((bool)ATrade.IsChecked, 0);
+                bot.AddAttack((bool)AAttack.IsChecked, 0);
+            }
+        }
+        private void CreateDestroyBot()
+        {
+           if(bot == null)
+            {
+                InitBot(true);
                 bot_thread = new Thread(bot.Execute);
                 bot_thread.Start();
-                
             }
-
-        }
-        private void PauseThread()
-        {
-           if(bot != null)
+           else
             {
-                if (bot_thread != null && bot_thread.IsAlive)
+                if(bot_thread != null && bot_thread.IsAlive)
                 {
                     bot_thread.Abort();
                     bot_thread = null;
                 }
-                else
-                {
-                    InitBot(false);
-                    bot_thread = new Thread(bot.Execute);
-                    bot_thread.Start();
-                }
-                    
+                bot = null;
+            }
+        }
+        private void PauseResumeBot()
+        {
+           if(bot_thread != null && bot_thread.IsAlive)
+            {
+                bot_thread.Abort();
+                bot_thread = null;
             }
            else
             {
-                InitBot(true);
-                bot_thread = new Thread(bot.Execute);
+                InitBot(false);
+                if (bot_thread == null)
+                    bot_thread = new Thread(bot.Execute);
                 bot_thread.Start();
             }
         }
@@ -245,10 +211,33 @@ namespace LittleHelper
             Controller.RegisterHotKey(Hwnd, HotF5, 0, F5);
             Controller.RegisterHotKey(Hwnd, HotF8, 0, F8);
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Test();
+        }
+
+        private IntPtr MsgListener(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            const int WM_HOTKEY = 0x0312;
+            switch (msg)
+            {
+                case WM_HOTKEY:
+                    var key = wParam.ToInt32();
+                    switch (key)
+                    {
+                        case HotF5:
+                            CreateDestroyBot();
+                            break;
+                        case HotF8:
+                            PauseResumeBot();
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return IntPtr.Zero;
         }
     }
     

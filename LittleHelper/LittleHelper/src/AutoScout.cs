@@ -94,11 +94,11 @@ namespace LittleHelper.src
 
         ImageReader reader;
 
-        public AutoScout(int village, double execute_rate_sec, double defer = 0)
+        public AutoScout(int village, double delayed_launch = 0)
         {
             this.village = village;
-            last_execute = DateTime.Now;
-            this.execute_rate_sec = defer;
+            this.last_execute = DateTime.Now;
+            this.execute_rate_sec = delayed_launch;
             this.reader = new ImageReader();
         }
         public void AddTarget(Resource resource)
@@ -135,6 +135,8 @@ namespace LittleHelper.src
                     int scouts_onstack = target.Count > Available_scouts ? 1 : Available_scouts / target.Count;
                     foreach (var stc in target)
                     {
+                        if (stc.X > 1000 && stc.Y > 550)
+                            continue;
                         if (!AlreadySended(stc))
                         {
                             Controller.AutoClick(stc);

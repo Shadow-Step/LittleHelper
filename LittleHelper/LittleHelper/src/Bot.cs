@@ -18,17 +18,20 @@ namespace LittleHelper.src
 
         List<AutoScout> Test = new List<AutoScout>();
 
-        public int Villages { get; set; }
+        private int Villages { get; set; }
+        private int Delay { get; set; }
 
-        public Bot(int villages)
+        public Bot(int villages, int delayed_launch)
         {
             Villages = villages;
+            Delay = delayed_launch;
         }
         public void Execute()
         {
             Random rand = new Random();
             //scout.ActivateCard(2, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 19, 00, 00));
             //list.Add(new Instruction<Coords, int>(ExecuteMode.EveryTime, Cvrt.ToSeconds(60, 0), Commands.ArmyBuy, Army.BUY_CATAPULT_1, 4));
+            Thread.Sleep(Delay * 1000);
             while (true)
             {
                 foreach (var com in commands)
@@ -39,7 +42,7 @@ namespace LittleHelper.src
                 Thread.Sleep(rand.Next(2000, 5000));
             }
         }
-        public void AddScout(bool isChecked, int defer)
+        public void AddScout(bool isChecked, int delayed_launch)
         {
            if(isChecked)
             {
@@ -47,7 +50,7 @@ namespace LittleHelper.src
                 {
                     for (int i = 0; i < Villages; i++)
                     {
-                        Scout = new AutoScout(i,defer);
+                        Scout = new AutoScout(i, delayed_launch);
 
                         
                         Scout.AddTarget(Resource.Stack);
@@ -103,18 +106,18 @@ namespace LittleHelper.src
 
             
         }
-        public void AddTrader(bool isChecked, int defer)
+        public void AddTrader(bool isChecked, int delayed_launch)
         {
             if(isChecked)
             {
                 if(Trader == null)
                 {
-                    Trader = new AutoTrading(Cvrt.ToSeconds(2, 24) * 2 , defer);
+                    Trader = new AutoTrading(Cvrt.ToSeconds(2, 24) * 2 , delayed_launch);
 
-                    Trader.AddSellingType(Trading.TAB_RESOURCES_4, 3);
-                    //Trader.AddSellingType(Trading.TAB_BANQUET_8, null);
-                    //Trader.AddSellingType(Trading.TAB_FOOD_7, null);
-                    Trader.AddTargets(1);
+                    Trader.AddSellingType(Trading.TAB_RESOURCES_4, 2);
+                    Trader.AddSellingType(Trading.TAB_BANQUET_8, null);
+                    Trader.AddSellingType(Trading.TAB_FOOD_7, null);
+                    Trader.AddTargets(7,4,6,3,5,1,2,0,9);
 
                     commands.Add(Trader);
                 }
@@ -128,7 +131,7 @@ namespace LittleHelper.src
                 }
             }
         }
-        public void AddAttack(bool isChecked, int defer)
+        public void AddAttack(bool isChecked, int delayed_launch)
         {
             if(isChecked)
             {
@@ -136,7 +139,7 @@ namespace LittleHelper.src
                 {
                     for (int i = 0; i < Villages; i++)
                     {
-                        Attack = new AutoAttack(i,defer);
+                        Attack = new AutoAttack(i, delayed_launch);
 
                         Attack.AddTarget(AIName.Rat, 0, 1);
                         Attack.AddTarget(AIName.Rat, 1, 1);
